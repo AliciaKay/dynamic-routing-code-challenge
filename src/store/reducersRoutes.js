@@ -1,39 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { routesApiCallBegan } from "./createActionRoutes";
+import { routesApiCallBegan, routeSelected } from "./createActionAll";
 
-const slice = createSlice({
+const routingSlice = createSlice({
     name: "routes",
     initialState: {
-        list: [],
-        loading: false,
-        selected: ''
+        routesList: [],
+        routesLoading: false,
     },
 
     reducers: {
-        routesRequested: (routes, action) => {
-            routes.loading = true;
+        routesRequested: (state, action) => {
+            state.routesLoading = true;
         },
 
-        routesReceived: (routes, action) => {
-            routes.list = action.payload;
-            routes.loading = false;
+        routesReceived: (state, action) => {
+            state.routesList = action.payload;
+            state.routesLoading = false;
         },
 
-        routesRequestFailed: (routes, action) => {
-            routes.loading = false;
-        },
-
-        routeSelected: (routes, action) => {
-            routes.selected = action.payload;
+        routesRequestFailed: (state, action) => {
+            state.routesLoading = false;
         }
     },
 });
 
-export default slice.reducer;
+export default routingSlice.reducer;
 
-const { routesRequested, routesReceived, routesRequestFailed, routeSelected } = slice.actions;
+const { routesRequested, routesReceived, routesRequestFailed } = routingSlice.actions;
 
-const url = '';
+const url = routeSelected.payload;
 
 export const loadroutes = () => (dispatch) => {
     return dispatch(
@@ -42,7 +37,7 @@ export const loadroutes = () => (dispatch) => {
             onStart: routesRequested.type,
             onSuccess: routesReceived.type,
             onError: routesRequestFailed.type,
-            selected: routeSelected.type,
+            selected: routeSelected.type
         })
     );
 };

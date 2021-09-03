@@ -6,21 +6,17 @@ import { useEffect } from "react";
 
 const Generic = () => {
     const dispatch = useDispatch();
-    const genericItems = useSelector((state) => state.list);
+    const genericItems = useSelector((state) => state.genericList);
 
 
-    useEffect(() => {
-        dispatch(loadgenericdata());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(loadgenericdata());
+    // }, [dispatch]);
 
     return (
         <div>
             <h1>Books</h1>
-            <ul>
-                {genericItems.map((item, index) => (
-                   <li key={item[index]}>{item[1]}</li>
-                ))}
-            </ul>
+
         </div>
     );
 };

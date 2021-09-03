@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as actions from "../createActionGeneric";
+import * as actions from "../createActionAll";
 
 const genericApi =
     ({ dispatch }) =>
@@ -8,7 +8,12 @@ const genericApi =
         if (action.type !== actions.genericApiCallBegan.type) return next(action);
 
         const { url, method, data, onStart, onSuccess, onError } =
-            action.payload;
+        action.payload;
+
+        // if (action.type === actions.routeSelected.type) {
+        //     console.log(action.type)
+        //     url = action.payload;
+        // }
 
         if (onStart) dispatch({ type: onStart });
 
@@ -16,7 +21,7 @@ const genericApi =
 
         try {
             const response = await axios.request({
-                baseURL: 'https://raw.githubusercontent.com/Bounteous-Inc/headless-cms-assessment/main' + url + '.json',
+                baseURL: process.env.REACT_APP_BASEURL,
                 url,
                 method,
                 data,
@@ -25,6 +30,7 @@ const genericApi =
             dispatch(actions.genericApiCallSucess(response.data));
             // Specific
             if (onSuccess)
+            console.log(response.data);
             var json_data = response.data;
             var result = [];
             for(var i in json_data) {

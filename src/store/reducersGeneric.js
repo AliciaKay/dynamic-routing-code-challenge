@@ -1,41 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { genericApiCallBegan } from "./createActionGeneric";
-import { routeSelected } from "./createActionRoutes"; 
+import { genericApiCallBegan } from "./createActionAll";
 
-const slice = createSlice({
+const genericSlice = createSlice({
     name: "generic",
     initialState: {
-        url: routeSelected,
-        list: [],
-        loading: false,
+        genericUrl: '',
+        genericList: [],
+        genericLoading: false,
     },
 
     reducers: {
-        genericDataRequested: (genericItems, action) => {
-            genericItems.loading = true;
+        genericDataRequested: (state, action) => {
+            state.genericLoading = true;
         },
 
-        genericDataReceived: (genericItems, action) => {
-            genericItems.list = action.payload;
-            genericItems.loading = false;
+        genericDataReceived: (state, action) => {
+            state.genericList = action.payload;
+            state.genericLoading = false;
         },
 
-        genericDataRequestFailed: (genericItems, action) => {
-            genericItems.loading = false;
+        genericDataRequestFailed: (state, action) => {
+            state.genericLoading = false;
         },
     },
 });
 
-export default slice.reducer;
+export default genericSlice.reducer;
 
-const { genericDataRequested, genericDataReceived, genericDataRequestFailed } = slice.actions;
-
-const url = routeSelected;
+const { genericDataRequested, genericDataReceived, genericDataRequestFailed } = genericSlice.actions;
 
 export const loadgenericdata = () => (dispatch) => {
     return dispatch(
         genericApiCallBegan({
-            url,
             onStart: genericDataRequested.type,
             onSuccess: genericDataReceived.type,
             onError: genericDataRequestFailed.type,

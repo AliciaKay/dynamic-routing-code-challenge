@@ -16,7 +16,7 @@ const maintenanceApi =
 
         try {
             const response = await axios.request({
-                baseURL: 'https://raw.githubusercontent.com/Bounteous-Inc/headless-cms-assessment/main/maintenance.json',
+                baseURL: process.env.REACT_APP_MAINTENANCEURL,
                 url,
                 method,
                 data,

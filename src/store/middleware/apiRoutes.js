@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as actions from "../routesapi";
+import * as actions from "../createActionRoutes";
 
 const routesApi =
     ({ dispatch }) =>
@@ -16,7 +16,7 @@ const routesApi =
 
         try {
             const response = await axios.request({
-                baseURL: process.env.REACT_APP_BASEURL,
+                baseURL: 'https://raw.githubusercontent.com/Bounteous-Inc/headless-cms-assessment/main/routes.json',
                 url,
                 method,
                 data,

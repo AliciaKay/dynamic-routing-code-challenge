@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { routesApiCallBegan } from "./routesapi";
+import { routesApiCallBegan } from "./createActionRoutes";
 
 const slice = createSlice({
     name: "routes",
     initialState: {
         list: [],
         loading: false,
+        selected: ''
     },
 
     reducers: {
@@ -21,14 +22,18 @@ const slice = createSlice({
         routesRequestFailed: (routes, action) => {
             routes.loading = false;
         },
+
+        routeSelected: (routes, action) => {
+            routes.selected = action.payload;
+        }
     },
 });
 
 export default slice.reducer;
 
-const { routesRequested, routesReceived, routesRequestFailed } = slice.actions;
+const { routesRequested, routesReceived, routesRequestFailed, routeSelected } = slice.actions;
 
-const url = "";
+const url = '';
 
 export const loadroutes = () => (dispatch) => {
     return dispatch(
@@ -37,6 +42,7 @@ export const loadroutes = () => (dispatch) => {
             onStart: routesRequested.type,
             onSuccess: routesReceived.type,
             onError: routesRequestFailed.type,
+            selected: routeSelected.type,
         })
     );
 };

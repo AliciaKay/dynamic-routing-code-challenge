@@ -1,11 +1,11 @@
 import axios from "axios";
-import * as actions from "../routesapi";
+import * as actions from "../createActionMaintenance";
 
-const routesApi =
+const maintenanceApi =
     ({ dispatch }) =>
     (next) =>
     async (action) => {
-        if (action.type !== actions.routesApiCallBegan.type) return next(action);
+        if (action.type !== actions.maintenanceApiCallBegan.type) return next(action);
 
         const { url, method, data, onStart, onSuccess, onError } =
             action.payload;
@@ -16,13 +16,13 @@ const routesApi =
 
         try {
             const response = await axios.request({
-                baseURL: process.env.REACT_APP_ROUTESURL,
+                baseURL: 'https://raw.githubusercontent.com/Bounteous-Inc/headless-cms-assessment/main/maintenance.json',
                 url,
                 method,
                 data,
             });
             // General
-            dispatch(actions.routesApiCallSucess(response.data));
+            dispatch(actions.maintenanceApiCallSucess(response.data));
             // Specific
             if (onSuccess)
             var json_data = response.data;
@@ -33,9 +33,9 @@ const routesApi =
             dispatch({ type: onSuccess, payload: result });
         } catch (error) {
             // General
-            dispatch(actions.routesApiCallFailed(error.message));
+            dispatch(actions.maintenanceApiCallFailed(error.message));
             if (onError) dispatch({ type: onError, payload: error.message });
         }
     };
 
-export default routesApi;
+export default maintenanceApi;

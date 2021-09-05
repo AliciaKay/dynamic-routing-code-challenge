@@ -1,37 +1,36 @@
 import { useDispatch, useSelector } from "react-redux";
-
 import { useEffect } from "react";
 
-import { loadroutes } from "../store/reducersRoutes";
-import { routeSelected } from "../store/createActionAll";
+import { selectAllRoutes, getRoutesCall } from '../store/reducersRoutes'
+
+import { selectedRoute } from '../store/reducersSelectedRoute';
+
+
 import Generic from "./generic";
 
 
 const Routes = () => {
     const dispatch = useDispatch();
-    const loading = useSelector((state) => state.routesLoading)
-    const routes = useSelector((state) => state.routesList);
+    const routes = useSelector(selectAllRoutes)
     const selected = useSelector((state) => state.selected);
 
-    console.log('routes at render:', routes);
-
     useEffect(() => {
-        dispatch(loadroutes());
+        console.log('useEffect called...', routes);
+        dispatch(getRoutesCall());
     }, [dispatch]);
 
     const sendRouteSelection = (selection)  => {
-        dispatch(routeSelected(selection))
+        dispatch(selectedRoute(selection))
     }
 
     return (
         <div>
             <h1>Available Information:</h1>
-            {loading !== false ? 
             <ul>
                 {routes.map((route, index) => (
                    <button key={route[index]} className="routeNav" onClick={() => sendRouteSelection(route[0])}>{route[1]}</button>
                 ))}
-            </ul> : <h1>loading...</h1>}
+            </ul> 
             <div>{selected !== '' ? <Generic /> : <span>Current Route Selected: {selected}</span>}</div>
         </div>
     );

@@ -4,7 +4,7 @@ import { routeSelected } from "./createActionAll";
 const selectedRouteSlice = createSlice({
     name: "route",
     initialState: {
-        selected: './bios.json'
+        selected: '/bios'
     },
 
     reducers: {
@@ -16,9 +16,4 @@ const selectedRouteSlice = createSlice({
 
 export default selectedRouteSlice.reducer;
 
- const { selectedRoute } = selectedRouteSlice.actions;
-
-
-export const loadselectedroute = () => (dispatch) => {
-    return dispatch({ routeSelected : selectedRoute.type })
-};
+ export const { selectedRoute } = selectedRouteSlice.actions;

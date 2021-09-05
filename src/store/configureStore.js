@@ -1,19 +1,17 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import routesReducer from "./reducersRoutes";
-import genericReducer from './reducersGeneric';
-import routeSelected from './reducersSelectedRoute';
+import routingSlice from "./reducersRoutes";
+import selectedRouteSlice from "./reducersSelectedRoute";
+import { routesApi } from "./middleware/apiSlice";
 
-import routesApi from "./middleware/apiRoutes";
-
-const reducer= {
-    routesReducer,
-    genericReducer,
-    routeSelected
+const reducer = {
+    [routesApi.reducerPath]: routesApi.reducer,
+    routingSlice, 
+    selectedRouteSlice
 }
 
-export default function store() {
-    return configureStore({
+const store = configureStore({
         reducer,
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routesApi),
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routesApi.middleware)
     });
-}
+
+export default store;

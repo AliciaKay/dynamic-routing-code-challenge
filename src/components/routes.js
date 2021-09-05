@@ -1,39 +1,60 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useMemo } from "react";
+import classnames from 'classnames'
 
-import { selectAllRoutes, getRoutesCall } from '../store/reducersRoutes'
+import { Spinner } from './spinner'
 
-import { selectedRoute } from '../store/reducersSelectedRoute';
-
-
-import Generic from "./generic";
+import { useGetRoutesQuery, useGetGenericQuery } from "../store/middleware/apiSlice"; 
 
 
 const Routes = () => {
-    const dispatch = useDispatch();
-    const routes = useSelector(selectAllRoutes)
-    const selected = useSelector((state) => state.selected);
 
-    useEffect(() => {
-        console.log('useEffect called...', routes);
-        dispatch(getRoutesCall());
-    }, [dispatch]);
+    const {
+        data: routes = [],
+        isLoading,
+        isFetching,
+        isSuccess,
+        isError,
+        error,
+      } = useGetRoutesQuery();
+
+      console.log('query:', useGetRoutesQuery());
 
     const sendRouteSelection = (selection)  => {
-        dispatch(selectedRoute(selection))
+        return useGetGenericQuery(selection)
     }
 
-    return (
-        <div>
-            <h1>Available Information:</h1>
-            <ul>
-                {routes.map((route, index) => (
-                   <button key={route[index]} className="routeNav" onClick={() => sendRouteSelection(route[0])}>{route[1]}</button>
-                ))}
-            </ul> 
-            <div>{selected !== '' ? <Generic /> : <span>Current Route Selected: {selected}</span>}</div>
-        </div>
-    );
-};
+    //useMemo to avoid re-sorting on every render
+    const sortedRoutes = useMemo(() => {
+        const sortedRoutes = Object.entries(routes);
+        // Sort routes by default alphabetical order
+        sortedRoutes.sort()
+        return sortedRoutes
+      }, [routes])
+
+    let content
+
+    if (isLoading) {
+        content = <Spinner text="Loading..." />
+      } else if (isSuccess) {
+        const routesButtons = sortedRoutes.map((route, index) => (
+               <button key={route[index]} className="routeNavButton" onClick={() => sendRouteSelection(route[0])}>{route[1]}</button>
+        ))
+    
+        const containerClassname = classnames('routes-container', {
+          disabled: isFetching,
+        })
+    
+        content = <div className={containerClassname}>{routesButtons}</div>
+      } else if (isError) {
+        content = <div>{error.toString()}</div>
+      }
+    
+      return (
+        <section className="routes-list">
+          <h2>Routes:</h2>
+          {content}
+        </section>
+      )
+    }
 
 export default Routes;

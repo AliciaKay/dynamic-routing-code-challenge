@@ -1,17 +1,40 @@
-import { useDispatch, useSelector } from "react-redux";
-import { loadgenericdata } from "../store/reducersGeneric";
-import { useEffect } from "react";
+import React from 'react'
+import { Spinner } from './spinner'
+import { useGetGenericQuery } from '../store/middleware/apiSlice'
 
-
+export const ItemCard = (item) => {
+    console.log("item:", item);
+    return(
+        <div>A Container for: {item}</div>
+    )
+}
 
 const Generic = () => {
-    const dispatch = useDispatch();
-    const genericItems = useSelector((state) => state.genericList);
+    const {
+        data: genericItems = [],
+        isFetching,
+        isSuccess,
+      } = useGetGenericQuery()
 
+     let items = genericItems;
 
-    // useEffect(() => {
-    //     dispatch(loadgenericdata());
-    // }, [dispatch]);
+     let sortedItems = items.sort();
+
+     let content;
+
+     if (isFetching) {
+        content = <Spinner text="Loading..." />
+      } else if (isSuccess) {
+        content = (
+          <div className="allItems">
+              {sortedItems.map((item) => 
+                <ItemCard item={item}/>
+              )}
+          </div>
+        )
+      }
+    
+      return <section>{content}</section>
 
     return (
         <div>

@@ -1,15 +1,36 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import Routes from './components/routes'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
+import Routes from './components/Routes'
+import Generic from './components/Generic';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-    <Routes />
-      </header>
-    </div>
-  );
+      <Router>
+      <div className="App">
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <React.Fragment>
+                <Routes />
+              </React.Fragment>
+            )}
+          />
+          <Route exact path="/books" component={Generic} />
+          <Route exact path="/bios" component={Generic} />
+          <Redirect to="/" />
+        </Switch>
+      </div>
+    </Router>
+  )
 }
 
 export default App;

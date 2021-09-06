@@ -1,24 +1,19 @@
 import React from 'react'
-import { Spinner } from './spinner'
+import { Spinner } from './Spinner'
 import { useGetGenericQuery } from '../store/middleware/apiSlice'
+import { ContainerComponent } from './ContainerComponent';
 
-export const ItemCard = (item) => {
-    console.log("item:", item);
-    return(
-        <div>A Container for: {item}</div>
-    )
-}
-
-const Generic = () => {
+const Generic = ({match}) => {
+    const type = match.params;
     const {
         data: genericItems = [],
         isFetching,
         isSuccess,
-      } = useGetGenericQuery()
+      } = useGetGenericQuery(type)
 
      let items = genericItems;
 
-     let sortedItems = items.sort();
+     let sortedItems = Object.entries(items)
 
      let content;
 
@@ -27,21 +22,12 @@ const Generic = () => {
       } else if (isSuccess) {
         content = (
           <div className="allItems">
-              {sortedItems.map((item) => 
-                <ItemCard item={item}/>
-              )}
+              {sortedItems.map((item, index) => 
+               <div key={item[index]} ><ContainerComponent details={item} /></div>)}
           </div>
         )
       }
     
       return <section>{content}</section>
-
-    return (
-        <div>
-            <h1>Books</h1>
-
-        </div>
-    );
 };
-
-export default Generic;
+export default Generic

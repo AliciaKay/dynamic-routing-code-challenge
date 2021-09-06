@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { routesApi } from "./middleware/apiSlice";
 
 const reducer = {
@@ -7,7 +7,7 @@ const reducer = {
 
 const store = configureStore({
         reducer,
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routesApi.middleware)
+        middleware: (gDM) => gDM().concat(routesApi.middleware)
     });
 
 export default store

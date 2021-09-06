@@ -1,9 +1,8 @@
 import { useMemo } from "react";
-import classnames from 'classnames'
 
-import { Spinner } from './spinner'
+import { Spinner } from './Spinner'
 
-import { useGetRoutesQuery, useGetGenericQuery } from "../store/middleware/apiSlice"; 
+import { useGetRoutesQuery } from "../store/middleware/apiSlice"; 
 
 
 const Routes = () => {
@@ -19,10 +18,6 @@ const Routes = () => {
 
       console.log('query:', useGetRoutesQuery());
 
-    const sendRouteSelection = (selection)  => {
-        return useGetGenericQuery(selection)
-    }
-
     //useMemo to avoid re-sorting on every render
     const sortedRoutes = useMemo(() => {
         const sortedRoutes = Object.entries(routes);
@@ -36,24 +31,27 @@ const Routes = () => {
     if (isLoading) {
         content = <Spinner text="Loading..." />
       } else if (isSuccess) {
-        const routesButtons = sortedRoutes.map((route, index) => (
-               <button key={route[index]} className="routeNavButton" onClick={() => sendRouteSelection(route[0])}>{route[1]}</button>
-        ))
+          console.log('should be rendering...');
+            content = <ul className="nav routes-list">
+                {sortedRoutes.map((route, index) => 
+                    <li className="nav-item" key={route[index]}>
+                        <a className="nav-link" href={route[0]}>{route[1]}</a>
+                    </li>
+                )}
+            </ul>
     
-        const containerClassname = classnames('routes-container', {
-          disabled: isFetching,
-        })
-    
-        content = <div className={containerClassname}>{routesButtons}</div>
       } else if (isError) {
         content = <div>{error.toString()}</div>
       }
+
+      if (isFetching) {
+        content = <Spinner text="Loading..." />
+      }
     
       return (
-        <section className="routes-list">
-          <h2>Routes:</h2>
+          <div role="navigation">
           {content}
-        </section>
+          </div>
       )
     }
 

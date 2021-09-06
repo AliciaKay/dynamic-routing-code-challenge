@@ -1,12 +1,14 @@
-import React, {useState} from 'react'
-import {Editor, EditorState} from 'draft-js'
-var parse = require('html-react-parser');
+import React from 'react'
+import { v4 as uuidv4 } from 'uuid';
+import parse from 'html-react-parser';
 
 export const TextRichComponent = ({ textData }) => {
-    const [editorState, setEditorState] = useState(()=> EditorState.createEmpty())
     let fieldFormat;
-    textData.textType === "plain" ? fieldFormat = <p>{textData.text}</p> : fieldFormat = (<div>{textData.text}</div>)
+    textData.textType === "plain" ? 
+    fieldFormat = <p>{textData.text}</p> : 
+    fieldFormat = parse(textData.text)
+    console.log(textData.textType, ':', textData.text)
     return (
-        <Editor editorState={editorState} onChange={setEditorState} className={textData.className} defaultValue={fieldFormat}/>
+     <div key={uuidv4()} className='textClass' style={{'textTransform': textData.style}}>{fieldFormat}</div>
     )
   }

@@ -1,0 +1,103 @@
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  max-height: 5%;
+  display: flex;
+  flex-direction: row;
+  align-items:flex-start;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.allItems {
+  text-align: center;
+  background-color: whitesmoke;
+  margin:auto;
+}
+
+.outer-html {
+  align-items: center;
+  justify-content: center;
+}
+
+.order-list {
+  filter: drop-shadow(16px 16px 10px gray)
+}
+
+@media only screen and (max-width: 600px) {
+  .order-element {
+    width: 50%
+  }
+}
+
+.order-element {
+  font-family: 'Bebas Neue', cursive;
+  border-radius: 15px;
+  align-items: center;
+  margin: 1% auto 1% auto;
+  width: 30%;
+  border: 1px solid gray;
+  padding: 2%;
+
+}
+
+.order-element:hover {
+  background-color: lightgray;
+}
+
+.series-summary {
+  margin: auto;
+  text-align: center;
+  font-size: x-large;
+}
+
+.book-list {
+  align-content: space-around;
+  width: 80%;
+  margin: 1% auto 0 auto;
+  padding: 1%;
+  background-color: thistle;
+  border-radius: 10px;
+}
+
+.book-cover {
+  border-radius: 2px;
+  margin: auto 2px auto 2px;
+}
+
+.book-title {
+  font-size: 200%;
+  padding: 1%;
+  font-family: 'Bebas Neue', cursive;
+}
+
+.book-summary {
+  text-align: start;
+  padding: 2%
+}

@@ -1,12 +1,8 @@
 import { useMemo } from "react";
-
 import { Spinner } from './Spinner'
-
 import { useGetRoutesQuery } from "../store/middleware/apiSlice"; 
 
-
 const Routes = () => {
-
     const {
         data: routes = [],
         isLoading,
@@ -29,7 +25,7 @@ const Routes = () => {
     if (isLoading) {
         content = <Spinner text="Loading..." />
       } else if (isSuccess) {
-            content = <ul className="nav routes-list">
+            content = <ul className="nav routes-list App-header">
                 {sortedRoutes.map((route, index) => 
                     <li className="nav-item" key={route[index]}>
                         <a className="nav-link" href={route[0]}>{route[1]}</a>

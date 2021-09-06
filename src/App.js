@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,16 +14,10 @@ function App() {
   return (
       <Router>
       <div className="App">
+        <React.Fragment>
+          <Routes />
+        </React.Fragment>
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <React.Fragment>
-                <Routes />
-              </React.Fragment>
-            )}
-          />
           <Route path={["/books", "/bios"]} component={Generic} />
           <Redirect to="/" />
         </Switch>

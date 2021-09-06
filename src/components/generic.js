@@ -13,11 +13,9 @@ const Generic = ({match}) => {
         isSuccess,
       } = useGetGenericQuery(type)
 
-      console.log(data);
-
       let items = data;
 
-     let content = <h1>testing...</h1>
+      let content;
 
       if (isFetching) {
          content = <Spinner text="Loading..." />

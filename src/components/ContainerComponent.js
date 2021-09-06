@@ -2,17 +2,21 @@ import React from 'react'
 import { ImageComponent } from './ImageComponent'
 import { TextRichComponent } from './TextRichComponent'
 
-export const ContainerComponent = ({ item }) => {
+export const ContainerComponent = ({ details }) => {
     return (
-      <container className={item.className} 
+      <div className={details.className} 
       style={{
         'display': 'flex', 
-        'flexDirection': item.flexDirection, 
-        'flexWrap': item.flexWrap, 
-        'justifyContent': item.justifyContent, 
-        'alignItems': item.justifyContent}}>
-        <ImageComponent imageData={item}/>
-        <TextRichComponent textData={item}/>
-      </container>
+        'flexDirection': details.flexDirection, 
+        'flexWrap': details.flexWrap, 
+        'justifyContent': details.justifyContent, 
+        'alignItems': details.justifyContent}}>
+          {details.items.length ? details.items.map((innerItem) => {
+            return <ContainerComponent details={innerItem} />
+          }): null}
+        {details.type === "image" ? <ImageComponent imageData={details}/> : null }
+        {details.type === "rich-text" ? <TextRichComponent textData={details}/> : null }
+        
+      </div>
     )
   }

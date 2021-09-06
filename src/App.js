@@ -24,8 +24,7 @@ function App() {
               </React.Fragment>
             )}
           />
-          <Route exact path="/books" component={Generic} />
-          <Route exact path="/bios" component={Generic} />
+          <Route path={["/books", "/bios"]} component={Generic} />
           <Redirect to="/" />
         </Switch>
       </div>

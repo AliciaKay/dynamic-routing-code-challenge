@@ -16,8 +16,6 @@ const Routes = () => {
         error,
       } = useGetRoutesQuery();
 
-      console.log('query:', useGetRoutesQuery());
-
     //useMemo to avoid re-sorting on every render
     const sortedRoutes = useMemo(() => {
         const sortedRoutes = Object.entries(routes);
@@ -31,7 +29,6 @@ const Routes = () => {
     if (isLoading) {
         content = <Spinner text="Loading..." />
       } else if (isSuccess) {
-          console.log('should be rendering...');
             content = <ul className="nav routes-list">
                 {sortedRoutes.map((route, index) => 
                     <li className="nav-item" key={route[index]}>
